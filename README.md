@@ -1,2 +1,2 @@
 # who-are-you
-A quiz that allows others to test how well their perception of other people online coincides with reality
+A quiz that allows people to test how well their perception of people's online identities coincides with reality.
