@@ -1,0 +1,36 @@
+/**
+ *  This file contains base element styles to be applied by default throughout the application.
+ */
+
+/**
+ *  Apply border-box box-sizing to all elements to allow padding to be part of the elements widht and height.
+ */
+* {
+    box-sizing: border-box;
+}
+
+/**
+ * Reset the fieldset border.
+ */
+fieldset {
+    border: 0;
+}
+
+/**
+ *  Remove rounded borders on all button elements for Chrome browsers > v.62.
+ */
+button,
+input[type="button"],
+input[type="submit"] {
+    border-radius: 0;
+}
+
+/**
+ *  Add the pointer cursor property to all button and link elements.
+ */
+a,
+button,
+input[type="button"],
+input[type="submit"] {
+    cursor: pointer;
+}

@@ -2,36 +2,31 @@ import autoprefixer from 'gulp-autoprefixer';
 import browserify from 'browserify';
 import browserSyncInit from 'browser-sync';
 import buffer from 'vinyl-buffer';
-import concat from 'gulp-concat';
-import declare from 'gulp-declare';
+import eyeglass from 'eyeglass';
 import gulp from 'gulp';
-import handlebars from 'gulp-handlebars';
 import imagemin from 'gulp-imagemin';
 import sass from 'gulp-sass';
 import source from 'vinyl-source-stream';
 import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
-import wrap from 'gulp-wrap';
 import nodemon from 'gulp-nodemon';
 
 const browserSync = browserSyncInit.create();
 // Temporary url until we determine where to host the project.
-const tempUrl = 'https://localhost:3000';
+const tempUrl = 'http://localhost:8080';
 // Directory and file locations.
 const directories = {
-    // Location to output compiled files.
+    // Locations to output compiled files.
     compiled: {
-        javascript: 'compiled/javascript',
-        templates: 'compiled/templates',
-        sass: 'compiled/css',
+        images: 'client/public/images',
+        javascript: 'client/public/javascript',
+        sass: 'client/public/css',
     },
     images: 'client/src/images/**/*.*',
     // All client side javascript files.
     javascript: 'client/src/javascript/**/*.js',
     // Entry location of JavaScript files.
-    javascriptEntry: 'client/src/javascirpt/app.js',
-    // Publicly exposed assets.
-    public: 'client/public',
+    javascriptEntry: 'client/src/javascript/app.js',
     // Location of SASS files.
     sass: 'client/src/sass/**/*.scss',
     // Server file locations
@@ -39,12 +34,10 @@ const directories = {
         main: 'server/src/server.js',
         watch: [
             'server/src/server.js',
-            'client/src/templates',
+            'client/src/views',
         ],
-        extension: 'js html hbs',
+        extension: 'js hbs',
     },
-    // Location of templates.
-    templates: 'client/src/templates/**/*.hbs',
 };
 
 /**
@@ -87,34 +80,6 @@ gulp.task('javascript', () => {
 });
 
 /**
- *  Compiles handlebars templates and places them in the compiled templates directory.
- */
-gulp.task('templates', () =>
-    // Load templates from the templates folder relative to where gulp was executed.
-    gulp.src(directories.templates)
-        // Compile each Handlebars template source file to a template function.
-        .pipe(handlebars())
-        // Wrap each template function in a call to Handlebars.template.
-        .pipe(wrap('Handlebars.template(<%= contents %>)'))
-        // Declare template functions as properties and sub-properties of exports
-        .pipe(declare({
-            root: 'exports',
-            noRedeclare: true, // Avoid duplicate declarations.
-            // Allow nesting based on path using gulp-declare's processNameByPath().
-            // You can remove this option completely if you aren't using nested folders.
-            // Drop the templates/ folder from the namespace path by removing it from the filePath.
-            processName: filePath => declare.processNamesByPath(filePath.replace('templates/', '')),
-        }))
-        // Concatenate down to a single file
-        .pipe(concat('index.js'))
-        // Add the Handlebars module in the final output.
-        .pipe(wrap('var Handlebars = require("handlebars");\n <%= contents %>'))
-        // Write the output into the compiled templates folder
-        .pipe(gulp.dest(directories.compiled.templates))
-        // Allow for live reloading of template files.
-        .pipe(browserSync.stream()));
-
-/**
  *  Compiles SASS/SCSS files, creates sourcemaps for SASS/SCSS files, and prefixes css properties with appropriate
  *  vendror prefixes for the last 2 browser versions.
  */
@@ -122,7 +87,7 @@ gulp.task('sass', () => gulp.src(directories.sass)
     // Initialize sourcemaps.
     .pipe(sourcemaps.init())
     // Compress SASS/SCSS files.
-    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(sass(eyeglass({ outputStyle: 'compressed' })).on('error', sass.logError))
     // Add vendor prefixes.
     .pipe(autoprefixer({
         browsers: ['last 2 versions'],
@@ -131,9 +96,9 @@ gulp.task('sass', () => gulp.src(directories.sass)
     // Write sourcemaps.
     .pipe(sourcemaps.write('./'))
     // Add to the compiled directory.
-    .pipe(gulp.dest(directories.compiled.sass)))
+    .pipe(gulp.dest(directories.compiled.sass))
     // Allow for live reloading of css files.
-    .pipe(browserSync.stream());
+    .pipe(browserSync.stream()));
 
 /**
  *  Minifys image files.
@@ -145,15 +110,15 @@ gulp.task('images', () => gulp.src(directories.images)
             { removeViewBox: false },
         ],
     }))
-    .pipe(gulp.dest(`${directories.public}/images`))
+    .pipe(gulp.dest(directories.compiled.images))
     // Allow for live reloading of image files.
     .pipe(browserSync.stream()));
 
 /**
- *  Uses nodemon to watch for any changes to server side files. Restarts server and reloads browserSync if changes
- *  occur.
+ *  Uses nodemon to watch for any changes to server side files. Restarts server and reloads if changes occur.
  */
 gulp.task('nodemon', (callback) => {
+    // Set file to run on restart, files to watch, node environment, and extensions to watch.
     nodemon({
         script: directories.server.main,
         watch: directories.server.watch,
@@ -162,9 +127,11 @@ gulp.task('nodemon', (callback) => {
         },
         ext: directories.server.extension,
     })
+        // On start run the callback function.
         .once('start', () => {
             callback();
         })
+        // On restart reload browser.
         .on('restart', () => {
             setTimeout(() => {
                 browserSync.reload();
@@ -182,11 +149,10 @@ gulp.task('browser-sync', ['nodemon'], () => {
 
     // Watch for changes in any of the client side directories.
     gulp.watch(directories.sass, ['sass']);
-    gulp.watch(directories.templates, ['templates']);
     gulp.watch(directories.javascript, ['javascript']);
     gulp.watch(directories.images, ['sass']);
 });
 
-gulp.task('build', ['javascript', 'templates', 'sass', 'images']);
+gulp.task('build', ['javascript', 'sass', 'images']);
 
 gulp.task('default', ['browser-sync', 'build']);

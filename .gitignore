@@ -7,8 +7,7 @@ node_modules
 # Any debug logs generated
 *.log
 
-# Static public files generated at compile time
-public
-
 # Any compiled or minified files
-compiled
+client/public/images
+client/public/javascript
+client/public/css
