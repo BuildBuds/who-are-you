@@ -7,6 +7,9 @@ node_modules
 # Any debug logs generated
 *.log
 
+# Eyeglass generated cache
+.eyeglass_cache
+
 # Any compiled or minified files
 client/public/images
 client/public/javascript
