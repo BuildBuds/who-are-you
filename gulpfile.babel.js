@@ -31,9 +31,9 @@ const directories = {
     sass: 'client/src/sass/**/*.scss',
     // Server file locations
     server: {
-        main: 'server/src/server.js',
+        main: 'backend/index.js',
         watch: [
-            'server/src/server.js',
+            'backend/index.js',
             'client/src/views',
         ],
         extension: 'js hbs',

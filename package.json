@@ -41,7 +41,12 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "express": "^4.16.2",
-    "express-handlebars": "^3.0.0"
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "helmet": "^3.1.0",
+    "mongoose": "^4.7.0",
+    "morgan": "^1.7.0"
   }
 }
