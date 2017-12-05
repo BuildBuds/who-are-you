@@ -11,6 +11,20 @@ import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import nodemon from 'gulp-nodemon';
 
+// Interface for executing shell commands
+const exec = require('child_process').exec;
+
+// Helper for interfacing with executing shell commands (e.g. mongo)
+const runCommand = function(command) {
+  return function (cb) {
+    exec(command, function (err, stdout, stderr) {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+    });
+  }
+};
+
 const browserSync = browserSyncInit.create();
 // Temporary url until we determine where to host the project.
 const tempUrl = 'http://localhost:8080';
@@ -31,9 +45,9 @@ const directories = {
     sass: 'client/src/sass/**/*.scss',
     // Server file locations
     server: {
-        main: 'server/src/server.js',
+        main: 'backend/index.js',
         watch: [
-            'server/src/server.js',
+            'backend/index.js',
             'client/src/views',
         ],
         extension: 'js hbs',
@@ -118,41 +132,45 @@ gulp.task('images', () => gulp.src(directories.images)
  *  Uses nodemon to watch for any changes to server side files. Restarts server and reloads if changes occur.
  */
 gulp.task('nodemon', (callback) => {
-    // Set file to run on restart, files to watch, node environment, and extensions to watch.
-    nodemon({
-        script: directories.server.main,
-        watch: directories.server.watch,
-        env: {
-            NODE_ENV: 'development',
-        },
-        ext: directories.server.extension,
-    })
-        // On start run the callback function.
-        .once('start', () => {
-            callback();
-        })
-        // On restart reload browser.
-        .on('restart', () => {
-            setTimeout(() => {
-                browserSync.reload();
-            }, 500);
-        });
+  // Set file to run on restart, files to watch, node environment, and extensions to watch.
+  nodemon({
+    script: directories.server.main,
+    watch: directories.server.watch,
+    env: {
+      NODE_ENV: 'development',
+    },
+    ext: directories.server.extension,
+  })
+  // On start run the callback function.
+  .once('start', () => {
+    callback();
+  })
+  // On restart reload browser.
+  .on('restart', () => {
+    setTimeout(() => {
+      browserSync.reload();
+    }, 500);
+  });
 });
+
+gulp.task('start-mongo', runCommand('mongod --logappend --logpath ./logs/mongo-logs'));
+gulp.task('stop-mongo', runCommand('mongo --eval "use admin; db.shutdownServer();"'));
 
 /**
  * Initialize browser-sync for live reloading and watches files to rerun tasks in the event they change.
  */
 gulp.task('browser-sync', ['nodemon'], () => {
-    browserSync.init({
-        proxy: tempUrl,
-    });
+  browserSync.init({
+    proxy: tempUrl
+  });
 
-    // Watch for changes in any of the client side directories.
-    gulp.watch(directories.sass, ['sass']);
-    gulp.watch(directories.javascript, ['javascript']);
-    gulp.watch(directories.images, ['sass']);
+  // Watch for changes in any of the client side directories.
+  gulp.watch(directories.sass, ['sass']);
+  gulp.watch(directories.javascript, ['javascript']);
+  gulp.watch(directories.images, ['sass']);
 });
+
 
 gulp.task('build', ['javascript', 'sass', 'images']);
 
-gulp.task('default', ['browser-sync', 'build']);
+gulp.task('default', ['start-mongo', 'browser-sync', 'build']);
