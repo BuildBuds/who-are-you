@@ -5,7 +5,7 @@ A quiz that allows people to test how well their perception of people's online i
 
 Before cloning the application, install the Gulp CLI globally by running `npm install gulp-cli -g`. If you're using nvm you can run `nvm use` to run the version of Node this project currently supports. Otherwise refer to the `package.json` file in the root and install and switch to the correct version of Node.
 
-You also need mongodb. Assuming you have homebrew, run `brew install mongo`.
+You also need mongodb. Assuming you have homebrew, run `brew install mongo`. Full instructions available on the [MongoDB docs page](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/).
 
 ## Install Instructions
 

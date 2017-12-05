@@ -4,7 +4,7 @@ const helmet     = require('helmet');
 const bodyParser = require('body-parser');
 const morgan     = require('morgan');
 const bluebird   = require('bluebird');
-const path = require('path');
+const path       = require('path');
 const expresshandlebars = require('express-handlebars');
 
 const config = require('./config');
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(morgan('tiny'));
 
 // Specify where our static assets are located
-app.use(express.static(path.join(__dirname, '../../client/public')));
+app.use(express.static(path.join(__dirname, '../client/public')));
 
 // Specify the paths to our layout and partilas files.
 app.engine('.hbs', expresshandlebars({

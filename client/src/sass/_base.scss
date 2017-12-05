@@ -9,6 +9,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+  background-color: red;
+  margin: 0;
+}
+
 /**
  * Reset the fieldset border.
  */
