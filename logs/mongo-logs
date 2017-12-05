@@ -269,3 +269,51 @@
 2017-12-05T10:27:04.967-0600 I NETWORK  [thread1] connection accepted from 127.0.0.1:64056 #19 (1 connection now open)
 2017-12-05T10:27:04.980-0600 I NETWORK  [conn19] received client metadata from 127.0.0.1:64056 conn19: { driver: { name: "nodejs", version: "2.2.27" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "16.7.0" }, platform: "Node.js v8.9.1, LE, mongodb-core: 2.1.11" }
 2017-12-05T10:27:20.565-0600 I -        [conn19] end connection 127.0.0.1:64056 (1 connection now open)
+2017-12-05T11:02:50.057-0600 I CONTROL  [signalProcessingThread] got signal 2 (Interrupt: 2), will terminate after current cmd ends
+2017-12-05T11:02:50.057-0600 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+2017-12-05T11:02:50.057-0600 I NETWORK  [signalProcessingThread] closing listening socket: 7
+2017-12-05T11:02:50.057-0600 I NETWORK  [signalProcessingThread] closing listening socket: 8
+2017-12-05T11:02:50.058-0600 I NETWORK  [signalProcessingThread] removing socket file: /tmp/mongodb-27017.sock
+2017-12-05T11:02:50.058-0600 I NETWORK  [signalProcessingThread] shutdown: going to flush diaglog...
+2017-12-05T11:02:50.059-0600 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+2017-12-05T11:02:50.062-0600 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+2017-12-05T11:02:50.274-0600 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+2017-12-05T11:02:50.276-0600 I CONTROL  [signalProcessingThread] now exiting
+2017-12-05T11:02:50.276-0600 I CONTROL  [signalProcessingThread] shutting down with code:0
+2017-12-05T11:02:50.276-0600 I CONTROL  [initandlisten] shutting down with code:0
+2017-12-05T11:03:03.879-0600 I CONTROL  [main] ***** SERVER RESTARTED *****
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten] MongoDB starting : pid=56325 port=27017 dbpath=/data/db 64-bit host=Lawrences-MacBook-Pro-2.local
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten] db version v3.4.10
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten] git version: 078f28920cb24de0dd479b5ea6c66c644f6326e9
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2m  2 Nov 2017
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten] allocator: system
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten] modules: none
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten] build environment:
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten]     distarch: x86_64
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten]     target_arch: x86_64
+2017-12-05T11:03:03.944-0600 I CONTROL  [initandlisten] options: { systemLog: { destination: "file", logAppend: true, path: "./logs/mongo-logs" } }
+2017-12-05T11:03:03.945-0600 I -        [initandlisten] Detected data files in /data/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2017-12-05T11:03:03.945-0600 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=7680M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=60,log_size=2GB),statistics_log=(wait=0),
+2017-12-05T11:03:04.488-0600 I CONTROL  [initandlisten] 
+2017-12-05T11:03:04.488-0600 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2017-12-05T11:03:04.489-0600 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2017-12-05T11:03:04.489-0600 I CONTROL  [initandlisten] 
+2017-12-05T11:03:04.552-0600 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+2017-12-05T11:03:04.552-0600 I NETWORK  [thread1] waiting for connections on port 27017
+2017-12-05T11:03:04.657-0600 I NETWORK  [thread1] connection accepted from 127.0.0.1:53810 #1 (1 connection now open)
+2017-12-05T11:03:04.668-0600 I NETWORK  [conn1] received client metadata from 127.0.0.1:53810 conn1: { driver: { name: "nodejs", version: "2.2.27" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "16.7.0" }, platform: "Node.js v8.9.1, LE, mongodb-core: 2.1.11" }
+2017-12-05T11:10:11.889-0600 I -        [conn1] end connection 127.0.0.1:53810 (1 connection now open)
+2017-12-05T11:10:12.323-0600 I NETWORK  [thread1] connection accepted from 127.0.0.1:54459 #2 (1 connection now open)
+2017-12-05T11:10:12.337-0600 I NETWORK  [conn2] received client metadata from 127.0.0.1:54459 conn2: { driver: { name: "nodejs", version: "2.2.27" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "16.7.0" }, platform: "Node.js v8.9.1, LE, mongodb-core: 2.1.11" }
+2017-12-05T11:21:45.180-0600 I CONTROL  [signalProcessingThread] got signal 2 (Interrupt: 2), will terminate after current cmd ends
+2017-12-05T11:21:45.181-0600 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+2017-12-05T11:21:45.181-0600 I NETWORK  [signalProcessingThread] closing listening socket: 7
+2017-12-05T11:21:45.181-0600 I NETWORK  [signalProcessingThread] closing listening socket: 8
+2017-12-05T11:21:45.181-0600 I NETWORK  [signalProcessingThread] removing socket file: /tmp/mongodb-27017.sock
+2017-12-05T11:21:45.181-0600 I NETWORK  [signalProcessingThread] shutdown: going to flush diaglog...
+2017-12-05T11:21:45.181-0600 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+2017-12-05T11:21:45.183-0600 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+2017-12-05T11:21:45.186-0600 I -        [conn2] end connection 127.0.0.1:54459 (1 connection now open)
+2017-12-05T11:21:45.332-0600 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+2017-12-05T11:21:45.334-0600 I CONTROL  [signalProcessingThread] now exiting
+2017-12-05T11:21:45.334-0600 I CONTROL  [signalProcessingThread] shutting down with code:0

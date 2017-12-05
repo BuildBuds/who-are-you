@@ -169,18 +169,8 @@ gulp.task('browser-sync', ['nodemon'], () => {
   gulp.watch(directories.javascript, ['javascript']);
   gulp.watch(directories.images, ['sass']);
 });
-//
-// gulp.task('log:watch', (cb) => {
-//   gulp.watch('./dbConnection.log', () => {
-//     let called = false;
-//     if (!called) {
-//       cb();
-//       called = true;
-//       gulp.start('browser-sync');
-//     }
-//   });
-// });
+
 
 gulp.task('build', ['javascript', 'sass', 'images']);
 
-gulp.task('default', ['browser-sync', 'build']);
+gulp.task('default', ['start-mongo', 'browser-sync', 'build']);
